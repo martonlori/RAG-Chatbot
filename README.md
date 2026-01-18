@@ -1,11 +1,9 @@
-# RAG Chatbot (Learning Project)
+# RAG Chatbot
 
 This project is a minimal **Retrieval-Augmented Generation (RAG)** chatbot built in Python.  
 Its goal is to demonstrate how Large Language Models (LLMs) can be combined with vector search to answer questions based on a private document knowledge base.
 
 The chatbot uses **SAP Help Articles** as its knowledge source and allows users to ask natural language questions, receiving answers grounded in the retrieved documentation context.
-
-This is a **learning project**, created as part of preparation for a Junior AI Engineer role.
 
 ---
 
@@ -53,6 +51,8 @@ RAG-Chatbot/
 │
 └── README.md
 
+---
+
 ## Technologies Used
 
 | Technology | Purpose |
@@ -85,5 +85,3 @@ Each chunk is stored with metadata linking it back to its source document.
 2. **Online (Query stage)**:
    - User query → embedding → FAISS similarity search → top-k chunks
    - Retrieved chunks + user question → prompt → LLM → final answer
-
----
