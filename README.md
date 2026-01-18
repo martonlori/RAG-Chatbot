@@ -1,14 +1,89 @@
-# RAG-Chatbot
+# RAG Chatbot (Learning Project)
 
-This project is a **Retrieval-Augmented Generation (RAG)** based chatbot that processes text extracted from PDF documents and provides relevant answers based on the content.
+This project is a minimal **Retrieval-Augmented Generation (RAG)** chatbot built in Python.  
+Its goal is to demonstrate how Large Language Models (LLMs) can be combined with vector search to answer questions based on a private document knowledge base.
 
-## Project Goal
+The chatbot uses **SAP Help Articles** as its knowledge source and allows users to ask natural language questions, receiving answers grounded in the retrieved documentation context.
 
-The aim is to develop a chatbot capable of intelligently answering questions based on one or multiple document sources.
+This is a **learning project**, created as part of preparation for a Junior AI Engineer role.
 
-## Key Features
+---
 
-- Extracting text from PDF files and basic text cleaning
-- Simple text preprocessing (e.g., removing extra whitespace, handling hyphenation)
-- Searching and querying within document contents
-- Responding to user queries based on the processed documents
+## What This Project Does
+
+1. Takes a collection of cleaned `.txt` documents
+2. Splits them into overlapping text chunks
+3. Generates vector embeddings using a local embedding model via **Ollama**
+4. Stores embeddings in a **FAISS vector database**
+5. At query time:
+   - Embeds the user question
+   - Retrieves the most relevant chunks
+   - Injects them into a prompt
+   - Generates a final answer using a local LLM
+
+This implements a full **RAG pipeline** end-to-end.
+
+---
+
+## Key Concepts Used
+
+- Retrieval-Augmented Generation (RAG)
+- Vector embeddings
+- Similarity search
+- Chunking and metadata mapping
+- Prompt grounding
+- Local LLM inference
+
+---
+
+## Project Structure
+RAG-Chatbot/
+│
+├── data/
+│   ├── raw_data_articles/       # Original PDFs
+│   ├── plain_text_articles/     # Cleaned text files
+│   ├── vector_store/            # Vector storage
+│       ├── index.faiss              # FAISS vector index
+│       └── metadata.npy             # Chunk metadata (source mapping)
+│
+├── scripts/
+│   ├── build_index.py           # Chunking + embedding + FAISS build
+│   └── chat.py                  # Chatbot runtime script
+│   └── pdf_parser.py            # PDF parsing
+│
+└── README.md
+
+## Technologies Used
+
+| Technology | Purpose |
+|-----------|---------|
+| **Python** | Core programming language |
+| **Ollama** | Local LLM and embedding inference |
+| **FAISS** | Vector similarity search engine |
+| **NumPy** | Numerical vector storage and manipulation |
+| **PDF parsing tools** | Extracting and cleaning documents |
+
+---
+
+## Data
+
+The knowledge base consists of:
+- SAP Help Articles
+- Extracted from PDFs
+- Cleaned and converted into plain text
+- Chunked into overlapping segments for semantic retrieval
+
+Each chunk is stored with metadata linking it back to its source document.
+
+---
+
+## How the RAG Pipeline Works
+
+1. **Offline (Indexing stage)**:
+   - Documents → chunks → embeddings → FAISS index + metadata
+
+2. **Online (Query stage)**:
+   - User query → embedding → FAISS similarity search → top-k chunks
+   - Retrieved chunks + user question → prompt → LLM → final answer
+
+---
