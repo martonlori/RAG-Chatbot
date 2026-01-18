@@ -60,9 +60,9 @@ Each chunk is stored with metadata linking it back to its source document.
 
 ## How the RAG Pipeline Works
 
-1. **Offline (Indexing stage)**:
+1. **Indexing stage**:
    - Documents → chunks → embeddings → FAISS index + metadata
 
-2. **Online (Query stage)**:
+2. **Query stage**:
    - User query → embedding → FAISS similarity search → top-k chunks
    - Retrieved chunks + user question → prompt → LLM → final answer
