@@ -34,25 +34,6 @@ This implements a full **RAG pipeline** end-to-end.
 
 ---
 
-## Project Structure
-RAG-Chatbot/
-│
-├── data/
-│   ├── raw_data_articles/       # Original PDFs
-│   ├── plain_text_articles/     # Cleaned text files
-│   ├── vector_store/            # Vector storage
-│       ├── index.faiss              # FAISS vector index
-│       └── metadata.npy             # Chunk metadata (source mapping)
-│
-├── scripts/
-│   ├── build_index.py           # Chunking + embedding + FAISS build
-│   └── chat.py                  # Chatbot runtime script
-│   └── pdf_parser.py            # PDF parsing
-│
-└── README.md
-
----
-
 ## Technologies Used
 
 | Technology | Purpose |
