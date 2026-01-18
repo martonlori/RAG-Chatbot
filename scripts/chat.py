@@ -8,7 +8,8 @@ METADATA_PATH = "data/vector_store/metadata.npy"
 EMBED_MODEL = "nomic-embed-text"
 CHAT_MODEL = 'llama3'
 
-TOP_K = 4
+
+TOP_K = 5
 
 
 # Create embedding vector for user query with Ollama
@@ -28,13 +29,19 @@ def load_vector_store():
 
 # Find the top-k "most similar" chunks to the user query, based on vector similarity
 def retrieve_chunks(query, index, metadata, k=TOP_K):
+
+    # Generate a vector from the user query, reshape it to be 2 dimensional vector (FAISS expects that)
     query_vector = embed_query(query).reshape(1, -1)
+
+    # In the vector database, search for the top_k most similar vectors to the 'vectorised' user query
     distances, indices = index.search(query_vector, k)
 
     results = []
+    # FAISS gives back a result also optimal for multiple queries, but we only have 1, hence indices[0]
     for i in indices[0]:
         results.append(metadata[i])
 
+    # Return the result, that contains metadata about the most relevant chunks (text, chunk id, source)
     return results
 
 
